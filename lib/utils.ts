@@ -1,9 +1,12 @@
 //this file is created automatically after installing shadcn, allows us to merge a couple of class names together
 
+/* eslint-disable prefer-const */
+/* eslint-disable no-prototype-builtins */
 import { type ClassValue, clsx } from "clsx";
 import qs from "qs";
-import { aspectRatioOptions } from "@/constants";
 import { twMerge } from "tailwind-merge";
+
+import { aspectRatioOptions } from "@/constants";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));

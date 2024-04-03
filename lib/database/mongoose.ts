@@ -17,6 +17,7 @@ interface MongooseConnection {
 //to optimize this process we will use caching for our connections so that
 
 //to let typescript know that it is global and coming from the global scope
+
 let cached: MongooseConnection = (global as any).mongoose;
 
 if (!cached) {
@@ -27,14 +28,10 @@ if (!cached) {
 }
 
 export const connectToDatabase = async () => {
-  //if the cached connection already exists, immediately exit the function, therefore optimizing our application
   if (cached.conn) return cached.conn;
 
-  if (!MONGODB_URL) throw new Error("MONGODB_URL is not defined");
+  if (!MONGODB_URL) throw new Error("Missing MONGODB_URL");
 
-  //if there is no cached promise of a connection,we create a new cached promise
-  //we are either doing the present cached promise or a new mongoose connection
-  //if not try to make a new connection to MONGODB
   cached.promise =
     cached.promise ||
     mongoose.connect(MONGODB_URL, {
@@ -42,7 +39,7 @@ export const connectToDatabase = async () => {
       bufferCommands: false,
     });
 
-  //once we have the promise, it will resolve in a connection
   cached.conn = await cached.promise;
+
   return cached.conn;
 };
