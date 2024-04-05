@@ -58,6 +58,7 @@ export async function POST(req: Request) {
   const eventType = evt.type;
 
   // CREATE
+  //as soon as new user is created, clerk will ping this endpoint route.ts, such as this for if a user as created, similarly for user deleted, updated, etc.
   if (eventType === "user.created") {
     const { id, email_addresses, image_url, first_name, last_name, username } =
       evt.data;
